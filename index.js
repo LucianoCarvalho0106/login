@@ -7,10 +7,9 @@ const loginRoutes = require("./routes/loginRoutes")
 const conectarDB = require("./model/dbConection")
 
 
-
 conectarDB.conectarBanco()
 
 
-app.use("/user",loginRoutes)
+app.use("/user",express.json(),loginRoutes)
 
 app.listen(process.env.PORT,()=>console.log(`Servidor rodando na porta ${process.env.PORT}`))
