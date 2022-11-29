@@ -88,5 +88,35 @@ const deleteUser = async (req,res)=>{
   
 }
 
+const updateUser = async (req,res)=>{
+  const userSelect = await User.findOne({email:req.body.email})
+  const user ={}
+  user.name = req.body.name
+  user.email = req.body.email
+  user.password = bcrypt.hashSync(req.body.password)
+  user.admin = req.body.admin
+  user.novoEmail = req.body.novoEmail
+  if(!userSelect){
+     res.status(404).json({
+      error:true,
+      message:"Usuário não encontrado"
+    })
+  }
 
-module.exports = {register,login,deleteUser}
+  try {
+    user.email = user.novoEmail
+    const userUpdate = await User.findByIdAndUpdate({_id:userSelect._id},user)
+    res.status(200).json({
+      error:false,
+      message:"Usuário atualizado com sucesso!"
+    })
+  } catch (error) {
+    res.status(500).json({
+      error:true,
+      message:"Erro ao atualizar Usuário"
+    })
+  }
+
+}
+
+module.exports = {register,login,deleteUser,updateUser}

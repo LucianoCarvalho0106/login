@@ -18,7 +18,7 @@ router.get("/",authController.auth,(req,res)=>{
 )
 
 router.delete("/",authController.auth,loginController.deleteUser)
-
+router.put("/",authController.auth,loginController.updateUser)
 
 
 module.exports = router
